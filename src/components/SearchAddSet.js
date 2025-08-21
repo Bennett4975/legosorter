@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import AddSet from './AddSet';
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
@@ -6,7 +8,12 @@ const BASE_URL = 'https://rebrickable.com/api/v3/lego';
 const SearchAddSet = ({ onAddSet }) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
+    const [inventory, setInventory] = useState({});
 
+    useEffect(() => {
+        const stored = JSON.parse(localStorage.getItem('legoInventory')) || {};
+        setInventory(stored);
+    }, []);
     const searchSets = async () => {
         const res = await fetch(`${BASE_URL}/sets/?search=${query}`, {
             headers: { Authorization: `key ${API_KEY}` },
@@ -15,51 +22,13 @@ const SearchAddSet = ({ onAddSet }) => {
         setResults(data.results || []);
     };
 
-    const addSet = async (set) => {
-
-        const res = await fetch(`${BASE_URL}/sets/${set.set_num}/parts/` , {
-            headers: { Authorization: `key ${API_KEY}` },
-        });
-        const partData = await fetchAllParts(set.set_num);
-        let totalPieces = 0;
-
-        const parts = {};
-        partData.forEach(p => {
-            parts[p.part.part_num] = {
-                owned: 0,
-                quantity: p.quantity
-            };
-            console.log(p.quantity);
-            totalPieces += p.quantity;
-            console.log(totalPieces);
-        });
-
-        onAddSet({
-            set_num: set.set_num,
-            name: set.name,
-            parts,
-            img: set.set_img_url,
-            totalPieces,
-            ownedPieces: 0,
-        });
-
-
-        setQuery('');
-        setResults([]);
-    };
-
-    const fetchAllParts = async (setNum) => {
-        let allParts = [];
-        let url = `${BASE_URL}/sets/${setNum}/parts/`;
-        while (url) {
-            const res = await fetch(url, {
-                headers: { Authorization : `key ${API_KEY}` },
-            });
-            const data = await res.json();
-            allParts = allParts.concat(data.results);
-            url = data.next;
-        }
-        return allParts;
+    const handleAddSet = (newSet) => {
+        const updated = {
+        ...inventory,
+        [newSet.set_num]: newSet,
+        };
+        setInventory(updated);
+        localStorage.setItem('legoInventory', JSON.stringify(updated));
     };
 
     return (
@@ -78,7 +47,7 @@ const SearchAddSet = ({ onAddSet }) => {
                     <li key={set.set_num}>
                         {set.name} ({set.set_num})
                         <img src={set.set_img_url} alt={set.name} style={{width : '50px'}}/>
-                        <button onClick={() => addSet(set)}>Add</button>
+                        <AddSet set={set} onAddSet={handleAddSet}/>
                     </li>
                 ))}
             </ul>
