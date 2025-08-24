@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import AddSet from '../components/SearchAddSet';
-import SetList from '../components/UserSetList';
 import ThemeList from '../components/ThemeList';
 
 const SearchSet = () => {
@@ -22,13 +21,6 @@ const SearchSet = () => {
         ownedPieces: newSet.ownedPieces,
       },
     };
-    setSets(updated);
-    localStorage.setItem('legoInventory', JSON.stringify(updated));
-  };
-
-  const handleRemoveSet = (setNum) => {
-    const updated = { ...sets };
-    delete updated[setNum];
     setSets(updated);
     localStorage.setItem('legoInventory', JSON.stringify(updated));
   };

@@ -37,6 +37,9 @@ const SearchPart = () => {
     fetchCategories();
   }, []);
 
+
+if (loading) return <p>Loading...</p>
+if (error) return <p>ERROR</p>
   return (
     <div className="container mt-4">
         <h1 className="mb-4">Search Part</h1>
@@ -82,7 +85,7 @@ const SearchPart = () => {
           <div className='col-md-6'>
             <h2>Misc</h2>
             <ul>
-                {categories.filter((category) => !nums.includes(category.id)).map((category) => (
+                {categories.filter((category) => category && category.id && !nums.includes(category.id)).map((category) => (
                     <li key={category.id}><Link to={`/part/category/${category.id}`}>{category.name}</Link></li>
                 ))}
             </ul>
