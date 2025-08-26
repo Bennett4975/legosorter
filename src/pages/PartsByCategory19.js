@@ -51,6 +51,7 @@ const PartsByCategory = () => {
             })
         );
         setParts(results);
+        setCachedParts(19, results);
       } catch (err) {
         setError(err.message);
       } finally {
