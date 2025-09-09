@@ -1,0 +1,35 @@
+.themes-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.themes-container h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.themes-container ul {
+  list-style: none;             /* remove bullets */
+  padding-left: 0;
+  column-count: 3;              /* number of columns */
+  column-gap: 20px;             /* space between columns */
+}
+
+.themes-container li {
+  margin-bottom: 8px;
+}
+
+.themes-container a {
+  text-decoration: none;
+  color: #000000;
+  transition: color 0.3s;
+}
+
+.themes-container a:hover {
+  color: #d400a6;
+}

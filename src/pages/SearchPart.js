@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import "../styles/SearchPart.css";
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
@@ -41,8 +42,7 @@ const SearchPart = () => {
 if (loading) return <p>Loading...</p>
 if (error) return <p>ERROR</p>
   return (
-    <div className="container mt-4">
-        <h1 className="mb-4">Search Part</h1>
+    <div className="categories-container">
         <div className="row">
           <div className='col-md-6'>
             <h2>Bricks:</h2>

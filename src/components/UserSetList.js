@@ -15,7 +15,7 @@ const UserSetList = ({ sets, onRemoveSet }) => {
             <ul className="set-grid">
             {Object.entries(sets).map(([setNum, setData]) => (
                 <li key={setNum} className="set-item">
-                <h3><Link to={`/set/${setNum}/`}>{setData.name} ({setNum})</Link></h3>
+                <h4><Link to={`/set/${setNum}/`}>{setData.name} ({setNum.slice(0,-2)})</Link></h4>
                 {setData.img && (
                     <img
                     src={setData.img}

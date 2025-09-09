@@ -1,0 +1,28 @@
+.set-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.set-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.set-container a:hover {
+    color: rgb(255, 53, 255);
+}
+
+.set-container ul {
+    list-style: none;
+}
+
+.add-button {
+    color: green;
+}
+
+.remove-button {
+    color: red;
+}

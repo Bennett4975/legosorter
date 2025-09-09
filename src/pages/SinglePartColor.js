@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
@@ -226,7 +226,7 @@ const SinglePart = () => {
                                 alt={set.name}
                                 style={{ width: 80, verticalAlign: 'middle', marginRight: 8 }}
                             />
-                            <strong>{set.name} ({set.set_num})</strong> — contains {set.totalNeeded}
+                            <Link to={`/set/${set.set_num}`}>{set.name} ({set.set_num})</Link> — contains {set.totalNeeded}
                             <button onClick={() => handleRemoval(set.set_num)}
                             
                             style={{ marginLeft: 8 }}

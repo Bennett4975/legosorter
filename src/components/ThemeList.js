@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import "../styles/ThemeList.css";
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
@@ -36,8 +37,11 @@ const ThemeList = () => {
     fetchThemes();
   }, []);
 
+  if (loading) return <p>loading...</p>
+  if (error) return <p>ERROR</p>
+
   return (
-    <div>
+    <div class="themes-container">
         <h2>All Themes</h2>
         <ul>
             {themes.map((theme) => (

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+import "../styles/SingleSet.css";
+
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
 
@@ -105,8 +107,8 @@ const SingleSet = () => {
     if (!set || !parts) return
 
     return (
-        <div>
-            <h2>{set.name}</h2>
+        <div className="set-container">
+            <h2>{set.name} ({set.set_num.slice(0, -2)})</h2>
             {ownedData ? (
               <h3>Owned</h3>
             ) : (
@@ -114,7 +116,7 @@ const SingleSet = () => {
             )} 
             <img src={set.set_img_url} alt={set.name} style={{width : '450px'}}/>
 
-            <h3>Missing Parts</h3>
+            <h3>Missing Parts:</h3>
             <ul>
                 {parts.map((item) => {
                     const key = `${item.part.part_num}-${item.color.id}`;
@@ -134,12 +136,12 @@ const SingleSet = () => {
                                    {ownedData && (
                                     <>
                                       <h5>{partData.owned}/{partData.quantity}</h5>
-                                      <button onClick={() => handleContribute(ownedData.set_num, key)}
+                                      <button className='add-button' onClick={() => handleContribute(ownedData.set_num, key)}
                                         style={{ marginLeft: 12 }}
                                       >
                                       Add 1
                                       </button>
-                                      <button onClick={() => handleRemoval(ownedData.set_num, key)}
+                                      <button className="remove-button" onClick={() => handleRemoval(ownedData.set_num, key)}
                                         style={{ marginLeft: 12 }}
                                       >
                                       Remove 1
@@ -172,7 +174,7 @@ const SingleSet = () => {
                                    {ownedData && (
                                     <>
                                       <h5>{partData.owned}/{partData.quantity}</h5>
-                                      <button onClick={() => handleRemoval(ownedData.set_num, key)}
+                                      <button className="remove-button" onClick={() => handleRemoval(ownedData.set_num, key)}
                                         style={{ marginLeft: 12 }}
                                       >
                                       Remove 1

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCachedParts, setCachedParts } from "../utils/cache";
 
+import "../styles/PartsByCategory.css"
+
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
 
@@ -74,9 +76,9 @@ const PartsByCategory = () => {
   return (
     <div>
       <h2>Parts in Category {category}</h2>
-      <ul>
+      <ul className='part-grid'>
         {parts.map(part => (
-          <li key={part.part_num}>
+          <li key={part.part_num} className='part-item'>
             <h3>
               <Link to={`/part/${part.part_num}`}>
                 {part.name} ({part.part_num})

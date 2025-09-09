@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
 
 import Home from "./pages/Home";
+import Guide from "./pages/Guide";
 import SearchSet from "./pages/SearchSet";
 import SetsByTheme from "./pages/SetsByTheme";
 import SingleSet from "./pages/SingleSet";
@@ -10,6 +11,8 @@ import PartsByCategory from "./pages/PartsByCategory";
 import PartsByCategory19 from "./pages/PartsByCategory19";
 import SinglePart from "./pages/SinglePart";
 import SinglePartColor from "./pages/SinglePartColor";
+import "./styles/Navbar.css"
+import "./index.css"
 
 
 const PartsByCategoryWrapper = () => {
@@ -26,9 +29,22 @@ const App = () => {
     <Router>
         <nav>
           {/* navbar */}
-          <h3><Link to="/">Home</Link></h3>
-          <h3><Link to="/set/search">Search Set</Link></h3>
-          <h3><Link to="/part/search">Search Part</Link></h3>
+          <h1 color="white" >Bennett's Lego Builder</h1>
+          <h2><Link to="/">Home</Link></h2>
+          <h2><Link to="/set/search">Search Set</Link></h2>
+          <h2><Link to="/part/search">Search Part</Link></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>          
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2></h2>
+          <h2><Link to="/help">Help</Link></h2>
         </nav>
       <div className="pt-20">
         <Routes>
@@ -40,6 +56,7 @@ const App = () => {
           <Route path="/part/category/:category" element={<PartsByCategoryWrapper/>} />
           <Route path="/part/:part_num" element={<SinglePart/>} />
           <Route path="/part/:part_num/:color" element={<SinglePartColor/>} />
+          <Route path="/help" elemnt={<Guide/>} />
         </Routes>
       </div>
     </Router>

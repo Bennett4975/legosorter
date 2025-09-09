@@ -1,0 +1,23 @@
+nav {
+  width: 100%;
+  background-color: #ff7779;       /* dark background */
+  display: flex;
+  justify-content: flex-start;      /* center items horizontally */
+  align-items: center;
+  padding: 10px 0;
+}
+
+nav h2 {
+  margin: 0 20px;               /* space between links */
+}
+
+nav a {
+  color: white;                 /* link text color */
+  text-decoration: none;        /* remove underline */
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #ff0000;               /* highlight on hover */
+}

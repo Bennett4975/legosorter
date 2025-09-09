@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+
+import "../styles/SinglePart.css"
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
@@ -166,7 +168,7 @@ const SinglePart = () => {
     if (!part) return <p>Part not found.</p>;
 
     return (
-        <div>
+        <div className='part-container'>
             <h2>{part.name}</h2>
             <img src={part.part_img_url} alt={part.name} style={{width : '200px'}}/>
             <h3>Select a color:</h3>
@@ -180,9 +182,13 @@ const SinglePart = () => {
             </select>
 
             {selectedColor && (
+                <>
+                {setsNeedingPart.length > 0 || setsNotNeedingPart.length > 0 ? (
+                    <>
+                    {setsNeedingPart.length > 0 && (
                     <>
                     <h3>Unfinished that need this part in {selectedColor.color_name}:</h3>
-                    {setsNeedingPart.length > 0 ? (
+
                         <ul>
                         {setsNeedingPart.map((set) => (
                             <li key={set.set_num} style={{ marginBottom: 12 }}>
@@ -191,13 +197,13 @@ const SinglePart = () => {
                                 alt={set.name}
                                 style={{ width: 80, verticalAlign: 'middle', marginRight: 8 }}
                             />
-                            <strong>{set.name} ({set.set_num})</strong> — needs {set.needed} of {set.totalNeeded}
-                            <button onClick={() => handleContribute(set.set_num)}
+                            <strong><Link to={`/set/${set.set_num}`}>{set.name} ({set.set_num})</Link></strong> — needs {set.needed} of {set.totalNeeded}
+                            <button className='add-button' onClick={() => handleContribute(set.set_num)}
                                 style={{ marginLeft: 12 }}
                             >
                                 Contribute 1
                             </button>
-                            <button onClick={() => handleRemoval(set.set_num)}
+                            <button className='remove-button' onClick={() => handleRemoval(set.set_num)}
                             
                             style={{ marginLeft: 8 }}
                             disabled={
@@ -209,11 +215,11 @@ const SinglePart = () => {
                             </li>
                         ))}
                         </ul>
-                    ) : (
-                        <p>No sets require.</p>
+                    </>
                     )}
-                    <h3>Completed sets that contain this part in {selectedColor.color_name}:</h3>
-                    {setsNotNeedingPart.length > 0 ? (
+                    {setsNotNeedingPart.length > 0 && (
+                        <>
+                        <h3>Completed sets that contain this part in {selectedColor.color_name}:</h3>
                         <ul>
                         {setsNotNeedingPart.map((set) => (
                             <li key={set.set_num} style={{ marginBottom: 12 }}>
@@ -222,8 +228,8 @@ const SinglePart = () => {
                                 alt={set.name}
                                 style={{ width: 80, verticalAlign: 'middle', marginRight: 8 }}
                             />
-                            <strong>{set.name} ({set.set_num})</strong> — contains {set.totalNeeded}
-                            <button onClick={() => handleRemoval(set.set_num)}
+                            <strong><Link to={`/set/${set.set_num}`}>{set.name} ({set.set_num})</Link></strong> — contains {set.totalNeeded}
+                            <button className='remove-button' onClick={() => handleRemoval(set.set_num)}
                             
                             style={{ marginLeft: 8 }}
                             disabled={
@@ -235,11 +241,14 @@ const SinglePart = () => {
                             </li>
                         ))}
                         </ul>
-                    ) : (
-                        <p>All your sets have this part/color complete! 🎉</p>
+                    </>
                     )}
                     </>
-                )}
+                    
+                ) : (
+                    <p>No sets require</p>
+                )} </>
+            )}
         </div>
     )
 };

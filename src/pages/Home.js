@@ -18,7 +18,6 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Bennett's Lego Builder</h1>
       <UserSetList sets={inventory} onRemoveSet={handleRemoveSet} />
     </div>
   );

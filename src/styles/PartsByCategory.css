@@ -1,4 +1,4 @@
-.set-grid {
+.part-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -9,7 +9,7 @@
   
 }
 
-.set-item {
+.part-item {
   width: 200px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -17,11 +17,11 @@
   background-color: #ffffff;
 }
 
-.set-item a {
-  text-decoration: none;
-  color: black;
+.part-item a {
+    text-decoration: none;
+    color: black;
 }
 
-.set-item a:hover {
-  color: purple;
+.part-item a:hover {
+    color: rgb(253, 50, 253);
 }

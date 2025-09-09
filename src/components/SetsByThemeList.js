@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AddSet from './AddSet';
+import "../styles/UserSetList.css"
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
@@ -55,9 +56,9 @@ const SetsByThemeList = ( {theme} ) => {
   return (
     <div>
         <h2>Sets</h2>
-        <ul>
+        <ul className='set-grid'>
             {sets.map((set) => (
-                <li key={set.set_num}><h3>{set.name} ({set.set_num})</h3>
+                <li className="set-item" key={set.set_num}><h3>{set.name} ({set.set_num})</h3>
                 <img src={set.set_img_url} alt={set.name} style={{width : '150px'}}/>
                 <AddSet set={set} onAddSet={handleAddSet}/>
                 </li>
