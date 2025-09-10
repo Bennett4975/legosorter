@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
+import "../styles/SinglePart.css"
+
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
 
@@ -170,7 +172,7 @@ const SinglePart = () => {
     if (!part) return <p>Part not found.</p>;
 
     return (
-        <div>
+        <div className='part-container'>
             <h2>{part.name}</h2>
             <img src={part.part_img_url} alt={part.name} style={{width : '200px'}}/>
             <h3>Select a color:</h3>
@@ -201,7 +203,7 @@ const SinglePart = () => {
                             >
                                 Contribute 1
                             </button>
-                            <button onClick={() => handleRemoval(set.set_num)}
+                            <button className='remove-button' onClick={() => handleRemoval(set.set_num)}
                             
                             style={{ marginLeft: 8 }}
                             disabled={

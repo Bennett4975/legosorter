@@ -33,17 +33,6 @@ const App = () => {
           <h2><Link to="/">Home</Link></h2>
           <h2><Link to="/set/search">Search Set</Link></h2>
           <h2><Link to="/part/search">Search Part</Link></h2>
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>          
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>
-          <h2></h2>
           <h2><Link to="/help">Help</Link></h2>
         </nav>
       <div className="pt-20">
@@ -56,7 +45,7 @@ const App = () => {
           <Route path="/part/category/:category" element={<PartsByCategoryWrapper/>} />
           <Route path="/part/:part_num" element={<SinglePart/>} />
           <Route path="/part/:part_num/:color" element={<SinglePartColor/>} />
-          <Route path="/help" elemnt={<Guide/>} />
+          <Route path="/help" element={<Guide/>} />
         </Routes>
       </div>
     </Router>
