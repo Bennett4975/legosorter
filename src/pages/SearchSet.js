@@ -39,7 +39,7 @@ const SearchSet = () => {
 
   return (
     <div>
-    <h1>Seacrh Set</h1>
+    <h1>Search Set</h1>
     <input 
             type='text'
             placeholder='Search for a set'

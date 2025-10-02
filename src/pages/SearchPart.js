@@ -9,6 +9,7 @@ const SearchPart = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // THESE ARE THE CATEGORIES WE WANT TO MANUALLY PUT INTO A LARGER CATEGORY
   const nums = [11, 8, 3, 20, 6, 37, 5, 14, 21, 49, 9, 19, 67, 15, 12, 51, 52, 53, 54, 55, 13, 27, 59, 60, 61, 65, 69, 70, 71, 72, 73, 25, 26, 40];
 
   useEffect(() => {
@@ -16,8 +17,6 @@ const SearchPart = () => {
       try {
         let allCategories = [];
         let url = `${BASE_URL}/part_categories/`;
-
-        // Loop through pages
         while (url) {
           const res = await fetch(url, {
             headers: { Authorization: `key ${API_KEY}` },
@@ -83,6 +82,7 @@ if (error) return <p>ERROR</p>
             </ul>
           </div>
           <div className='col-md-6'>
+            {/* ANY CATEGORY NOT IN THE PREVIOUSLY DECLARED LIST WILL APPEAR HERE */}
             <h2>Misc</h2>
             <ul>
                 {categories.filter((category) => category && category.id && !nums.includes(category.id)).map((category) => (

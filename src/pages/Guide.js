@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Guide.css"
-
+// SIMPLE PAGE OF TEXT CONTENT
 const Guide = () => {
     return (
         <div className="guide-container">
@@ -34,9 +34,16 @@ const Guide = () => {
                 same set. Each set has it's own page that displays all needed and owned parts which you may 
                 add and remove as you please.
             </p>
-            <p>If it is not initially clear which set the chunk is a part of, I would advise searching for the
-                most unusual part. From there you can see if any set requires the part, and make an educated guess
+            <p>If it is not initially clear which set the chunk is a part of, I would advise searching the
+                most unusual looking part in the chunk. From there you can see if any set requires the part, and make an educated guess
                 if the set requires two or three more of the chunks parts.
+            </p>
+            <h5>Don't select pieces randomly:</h5>
+            <p>An extra step that may seem tedious at first is logging bricks categories at a time rather than
+                all at once. What i mean by this is; Start by taking all Brick type pieces from your lego bin,
+                putting them into another empty bin perhaps. From there you can take out every Regular Brick,
+                log them. Then sloped, then round etc.
+
             </p>
             
         </div>

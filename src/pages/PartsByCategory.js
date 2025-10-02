@@ -7,16 +7,18 @@ import "../styles/PartsByCategory.css"
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
 
+
+// RETRIES NECESSARY AS SOME LEGO CATEGORIES HAVE THOUSANDS OF ENTRIES
 const fetchWithRetry = async (url, retries = 5, delay = 1000) => {
   for (let i = 0; i < retries; i++) {
-    const res = await fetch(url, { headers: { Authorization: `key ${API_KEY}` } });
-    if (res.status === 429) {
+    const response = await fetch(url, { headers: { Authorization: `key ${API_KEY}` } });
+    if (response.status === 429) {
       await new Promise(r => setTimeout(r, delay));
-      delay *= 2; // exponential backoff
+      delay *= 2;
       continue;
     }
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
-    return res.json();
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    return response.json();
   }
   throw new Error("Too many retries, API still failing");
 };
@@ -42,13 +44,13 @@ const PartsByCategory = () => {
 
         while (url) {
           const data = await fetchWithRetry(url);
-          const filtered = (data.results || [])
+          const filtered = (data.results || [])   // FILTER RESULTS TO GET RID OF ANY PARTS THAT ARE PRINTS
             .filter(p => p && (!p.print_of || p.print_of === null || p.print_of === ""))
           allParts = [...allParts, ...filtered];
           url = data.next;
         }
 
-        // Deduplicate by normalized name
+        // REMOVE UNWANTED ITERATIONS OF LEGO PARTS
         const deduped = allParts.reduce((acc, part) => {
           const key = part.name.toLowerCase().replace(/\s*\(.*\)/, '').trim();
           if (!acc.map.has(key)) {

@@ -24,7 +24,8 @@ const TILES = [
     "90498",
     "48288"
 ]
-
+// CATEGORY 19 (TILES) CONTAINS TOO MANY PRINTED PARTS TO FETCH ALL AND FILTER FROM THE API
+// DUE TO THIS I HAD TO HARDCODE FOR EACH DEFAULT TILE
 const PartsByCategory = () => {
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(true);
