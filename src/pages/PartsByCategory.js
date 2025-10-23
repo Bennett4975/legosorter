@@ -23,11 +23,40 @@ const fetchWithRetry = async (url, retries = 5, delay = 1000) => {
   throw new Error("Too many retries, API still failing");
 };
 
+const getPartStatus = (partNum, inventory) => {
+  if (!inventory) return "not_required";
+
+  let found = false;
+
+  for (const setData of Object.values(inventory)) {
+    for (const [key, val] of Object.entries(setData.parts || {})) {
+      if (key.startsWith(`${partNum}-`)) {
+        found = true;
+        const { owned = 0, quantity = 0 } = val;
+        if (owned < quantity) {
+          return "incomplete";
+        }
+      }
+    }
+  }
+
+  if (!found) return "not_required";
+  return "complete";
+};
+
+
+
 const PartsByCategory = () => {
   const { category } = useParams();
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [inventory, setInventory] = useState([]);
+
+  useEffect(() => {
+    const savedInventory = JSON.parse(localStorage.getItem('legoInventory')) || {};
+    setInventory(savedInventory);
+  }, []);
 
   useEffect(() => {
     const cached = getCachedParts(category);
@@ -79,16 +108,22 @@ const PartsByCategory = () => {
     <div>
       <h2>Parts in Category {category}</h2>
       <ul className='part-grid'>
-        {parts.map(part => (
-          <li key={part.part_num} className='part-item'>
-            <h3>
-              <Link to={`/part/${part.part_num}`}>
-                {part.name} ({part.part_num})
-              </Link>
-            </h3>
-            <img src={part.part_img_url} alt={part.name} style={{ width: '150px' }} />
-          </li>
-        ))}
+        {parts.map(part => {
+          const status = getPartStatus(part.part_num, inventory);
+          if (status === "not_required") return null;
+          return (
+            <li key={part.part_num} className='part-item'>
+              <h3>
+                <Link to={`/part/${part.part_num}`}>
+                  {part.name} ({part.part_num}) 
+                </Link>
+              </h3>
+              <h4 style={{color : "green"}}>{status === "complete" && "COMPLETE"}</h4>
+              <h4 style={{color : "red"}}>{status === "incomplete" && "INCOMPLETE"}</h4>
+              <img src={part.part_img_url} alt={part.name} style={{ width: '150px' }} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

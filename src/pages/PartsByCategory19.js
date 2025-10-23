@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCachedParts, setCachedParts } from "../utils/cache";
 
+import "../styles/PartsByCategory.css"
+
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
 const TILES = [
-    "3070a",
     "3070b",
+    "3069b",
     "3068b",
     "63864",
     "2431",
@@ -26,10 +28,37 @@ const TILES = [
 ]
 // CATEGORY 19 (TILES) CONTAINS TOO MANY PRINTED PARTS TO FETCH ALL AND FILTER FROM THE API
 // DUE TO THIS I HAD TO HARDCODE FOR EACH DEFAULT TILE
+const getPartStatus = (partNum, inventory) => {
+  if (!inventory) return "not_required";
+
+  let found = false;
+
+  for (const setData of Object.values(inventory)) {
+    for (const [key, val] of Object.entries(setData.parts || {})) {
+      if (key.startsWith(`${partNum}-`)) {
+        found = true;
+        const { owned = 0, quantity = 0 } = val;
+        if (owned < quantity) {
+          return "incomplete";
+        }
+      }
+    }
+  }
+
+  if (!found) return "not_required";
+  return "complete";
+};
+
 const PartsByCategory = () => {
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [inventory, setInventory] = useState([]);
+  
+  useEffect(() => {
+    const savedInventory = JSON.parse(localStorage.getItem('legoInventory')) || {};
+    setInventory(savedInventory);
+  }, []);
 
   useEffect(() => {
 
@@ -69,17 +98,23 @@ const PartsByCategory = () => {
   return (
     <div>
       <h2>Parts in Category 19</h2>
-      <ul>
-        {parts.map(part => (
-          <li key={part.part_num}>
-            <h3>
-              <Link to={`/part/${part.part_num}`}>
-                {part.name} ({part.part_num})
-              </Link>
-            </h3>
-            <img src={part.part_img_url} alt={part.name} style={{ width: '150px' }} />
-          </li>
-        ))}
+      <ul className='part-grid'>
+        {parts.map(part => {
+          const status = getPartStatus(part.part_num, inventory);
+          if (status === "not_required") return null; 
+          return (
+            <li key={part.part_num} className='part-item'>
+              <h3>
+                <Link to={`/part/${part.part_num}`}>
+                  {part.name} ({part.part_num})
+                </Link>
+              </h3>
+              <h4 style={{color : "green"}}>{status === "complete" && "COMPLETE"}</h4>
+              <h4 style={{color : "red"}}>{status === "incomplete" && "INCOMPLETE"}</h4>
+              <img src={part.part_img_url} alt={part.name} style={{ width: '150px' }} />
+            </li>
+          )
+        })}
       </ul>
     </div>
   );

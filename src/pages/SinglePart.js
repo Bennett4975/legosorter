@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-import "../styles/SinglePart.css"
+
 
 const API_KEY = 'bafdb450b6e173f89d553165ccdf8ecb';
 const BASE_URL = 'https://rebrickable.com/api/v3/lego';
